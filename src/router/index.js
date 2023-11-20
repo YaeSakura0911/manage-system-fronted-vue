@@ -71,8 +71,22 @@ const router = createRouter({
     ]
 })
 
+/**
+ * 路由守卫
+ */
 router.beforeEach(async (to, from) => {
-
+    // 如果匹配路径为空
+    if (to.fullPath == '/') {
+        // 如果name为空
+        if (sessionStorage.getItem('name') != undefined) {
+            // 跳转去登录
+            return '/login'
+        }
+        else {
+            // 跳转去工作台
+            return '/dashboard/workbench'
+        }
+    }
 })
 
 export default router

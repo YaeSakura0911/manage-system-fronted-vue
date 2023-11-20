@@ -6,6 +6,8 @@ import { DashboardOutlined, LogoutOutlined, MenuFoldOutlined, MenuUnfoldOutlined
 const collapsed = ref(false)
 const route = useRoute()
 const router = useRouter()
+const avatarUrl = ref('https://www.antdv.com/assets/logo.1ef800a8.svg')
+const name = ref('管理员')
 const breadcrumb = {
     routes: [
         {
@@ -30,6 +32,7 @@ const breadcrumb = {
 
 onMounted(() => {
     console.log(route.fullPath)
+    console.log(route.fullPath == '/dashboard/workbench')
     console.log(router.getRoutes())
 })
 </script>
@@ -37,8 +40,8 @@ onMounted(() => {
 <template>
     <a-config-provider>
         <a-layout>
-            <a-layout-sider v-model:collapsed="collapsed" theme="light" breakpoint="lg" collapsed-width="0" :trigger="null"
-                collapsible>
+            <!-- 侧边栏 -->
+            <a-layout-sider v-model:collapsed="collapsed" theme="light" :trigger="null" collapsible>
                 <div class="logo"></div>
                 <a-menu mode="inline">
                     <a-sub-menu key="dashboard">
@@ -71,6 +74,7 @@ onMounted(() => {
                 </a-menu>
             </a-layout-sider>
             <a-layout>
+                <!-- 顶栏 -->
                 <a-layout-header style="background: #fff; padding: 0">
                     <a-row justify="space-between" align="center">
                         <a-col>
@@ -83,7 +87,7 @@ onMounted(() => {
                         <a-col>
                             <a-dropdown>
                                 <a-space>
-                                    <a-avatar></a-avatar>
+                                    <a-avatar :src="avatarUrl">{{ name }}</a-avatar>
                                     <a-typography-text type="secondary">
                                         管理员
                                     </a-typography-text>
@@ -106,17 +110,45 @@ onMounted(() => {
                         </a-col>
                     </a-row>
                 </a-layout-header>
-                <a-layout-content>
-                    <a-page-header :ghost="false" :title="route.meta.title" :breadcrumb="breadcrumb">
 
+                <!-- 内容 -->
+                <a-layout-content>
+                    <!-- 页头 -->
+                    <a-page-header :ghost="false" :title="route.meta.title" :breadcrumb="breadcrumb">
+                        <!-- TODO: 只有工作台会显示下面内容 -->
+                        <a-row justify="space-between">
+                            <a-col>
+                                <a-avatar :src="avatarUrl" :size="64"></a-avatar>
+                                <a-typography-text>早上好，管理员</a-typography-text>
+                            </a-col>
+
+                            <a-col>
+                                <a-space>
+                                    <template #split>
+                                        <a-divider type="vertical" />
+                                    </template>
+                                    <a-statistic title="项目数" :value="20"></a-statistic>
+                                    <a-statistic title="任务数" :value="58">
+                                        <template #suffix>
+                                            <span>/ 100</span>
+                                        </template>
+                                    </a-statistic>
+                                </a-space>
+                            </a-col>
+                        </a-row>
                     </a-page-header>
-                    <RouterView />
+
+                    <a-layout style="padding: 24px;">
+                        <RouterView />
+                    </a-layout>
                 </a-layout-content>
                 <a-layout-footer style="text-align: center">
                     Ant Design ©2018 Created by Ant UED
                 </a-layout-footer>
             </a-layout>
         </a-layout>
+
+        
     </a-config-provider>
 </template>
 
@@ -133,7 +165,12 @@ onMounted(() => {
     color: #1890ff;
 }
 
-.ant-dropdown-trigger :hover {
+.ant-dropdown-trigger {
+    padding: 0 16px;
+    transition: background-color 0.3s cubic-bezier(0.215, 0.61, 0.355, 1);
+}
+
+.ant-dropdown-trigger:hover {
     background-color: rgba(0, 0, 0, 0.06);
     cursor: pointer;
 }
