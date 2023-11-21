@@ -1,11 +1,30 @@
 <script setup>
 import { ref, reactive } from 'vue'
-import { PlusOutlined, SettingOutlined } from '@ant-design/icons-vue'
+import { PlusOutlined } from '@ant-design/icons-vue'
 import { message, Modal } from 'ant-design-vue'
 
 const showAddShortcutsModal = ref(false)
 const showEditShortcutsModal = ref(false)
 
+/**
+ * 通知数据
+ */
+const notifyData = ref([
+    {
+        id: 1,
+        title: '通知',
+        content: '通知内容',
+        type: 0,
+        time: '2023-11-21 14:45:32',
+    },
+    {
+        id: 2,
+        title: '公告',
+        content: '公告内容',
+        type: 1,
+        time: '2023-11-20 16:43:25',
+    }
+])
 /**
  * 项目数据
  */
@@ -77,6 +96,12 @@ const addShortcutsForm = reactive({
 })
 
 
+function handleWatchNotifyConfirm(title, content, time) {
+    Modal.info({
+        title: title,
+        content: content
+    })
+}
 /**
  * 添加快捷方式确认按钮
  */
@@ -96,8 +121,28 @@ function handleDeleteShortcuts(index) {
 
 <template>
     <a-row :gutter="[16, 16]">
+        <!-- 通知公告 -->
+        <a-col :xs="24" :lg="8">
+            <a-card title="通知公告">
+                <a-list :data-source="notifyData">
+                    <template #renderItem="{ item }">
+                        <a-list-item>
+                            <template #actions>
+                                <a-typography-link @click="handleWatchNotifyConfirm(item.title, item.content, item.time)">查看</a-typography-link>
+                            </template>
+                            <a-list-item-meta :description="item.time">
+                                <template #title>
+                                    <a-typography-text strong>{{ item.title }}</a-typography-text>
+                                </template>
+                            </a-list-item-meta>
+                        </a-list-item>
+                    </template>
+                </a-list>
+            </a-card>
+        </a-col>
+
         <!-- 进行中的项目 -->
-        <a-col :xs="24" :lg="16">
+        <a-col :xs="24" :lg="8">
             <a-card title="进行中的项目">
                 <template #extra>
                     <router-link to="/project">全部项目</router-link>
@@ -113,12 +158,14 @@ function handleDeleteShortcuts(index) {
         <a-col :xs="24" :lg="8">
             <a-card title="快捷方式" :bordered="false">
                 <template #extra>
-                    <a-typography-link @click="() => (showEditShortcutsModal = !showEditShortcutsModal)">管理</a-typography-link>
+                    <a-typography-link
+                        @click="() => (showEditShortcutsModal = !showEditShortcutsModal)">管理</a-typography-link>
                 </template>
                 <a-card-grid v-for="shortcuts in shortcutsData">
                     <a-typography-link :href="shortcuts.url">{{ shortcuts.description }}</a-typography-link>
                 </a-card-grid>
-                <a-card-grid v-if="shortcutsData.length < 8" @click="() => (showAddShortcutsModal = !showAddShortcutsModal)">
+                <a-card-grid v-if="shortcutsData.length < 8"
+                    @click="() => (showAddShortcutsModal = !showAddShortcutsModal)">
                     <plus-outlined />
                     添加
                 </a-card-grid>
@@ -126,7 +173,7 @@ function handleDeleteShortcuts(index) {
         </a-col>
 
         <!-- 进行中的任务 -->
-        <a-col :xs="24" :lg="16">
+        <a-col :xs="24" :lg="8">
             <a-card title="进行中的任务">
                 <template #extra>
                     <router-link to="/task">全部任务</router-link>
@@ -170,6 +217,7 @@ function handleDeleteShortcuts(index) {
 
     {{ shortcutsData }}
 
+    <!-- 添加快捷方式模态框 -->
     <a-modal title="添加快捷方式" v-model:open="showAddShortcutsModal" @ok="handleAddShortcutsConfirm">
         <a-form v-model="addShortcutsForm">
             <a-form-item label="说明">
@@ -181,6 +229,7 @@ function handleDeleteShortcuts(index) {
         </a-form>
         {{ addShortcutsForm }}
     </a-modal>
+    <!-- 管理快捷方式模态框 -->
     <a-modal title="管理快捷方式" v-model:open="showEditShortcutsModal">
         <a-list :data-source="shortcutsData">
             <template #renderItem="{ item, index }">
