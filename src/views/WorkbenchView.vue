@@ -7,6 +7,23 @@ const showAddShortcutsModal = ref(false)
 const showEditShortcutsModal = ref(false)
 
 /**
+ * 通知数据
+ */
+const notifyData = ref([
+    {
+        title: '',
+        content: '',
+        type: 0,
+        status: 0,
+    },
+    {
+        title: '',
+        content: '',
+        type: 1,
+        status: 0
+    }
+])
+/**
  * 项目数据
  */
 const projectData = ref([
@@ -96,8 +113,18 @@ function handleDeleteShortcuts(index) {
 
 <template>
     <a-row :gutter="[16, 16]">
+        <a-col :xs="24" :lg="8">
+            <a-card title="通知公告">
+                <a-list :data-source="notifyData">
+                    <template #renderItem="{ item }">
+                        <a-list-item></a-list-item>
+                    </template>
+                </a-list>
+            </a-card>
+        </a-col>
+
         <!-- 进行中的项目 -->
-        <a-col :xs="24" :lg="16">
+        <a-col :xs="24" :lg="8">
             <a-card title="进行中的项目">
                 <template #extra>
                     <router-link to="/project">全部项目</router-link>
@@ -126,7 +153,7 @@ function handleDeleteShortcuts(index) {
         </a-col>
 
         <!-- 进行中的任务 -->
-        <a-col :xs="24" :lg="16">
+        <a-col :xs="24" :lg="8">
             <a-card title="进行中的任务">
                 <template #extra>
                     <router-link to="/task">全部任务</router-link>
@@ -167,8 +194,6 @@ function handleDeleteShortcuts(index) {
         </a-col>
 
     </a-row>
-
-    {{ shortcutsData }}
 
     <a-modal title="添加快捷方式" v-model:open="showAddShortcutsModal" @ok="handleAddShortcutsConfirm">
         <a-form v-model="addShortcutsForm">
