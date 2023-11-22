@@ -2,6 +2,7 @@
 import { ref, reactive } from 'vue'
 import { PlusOutlined } from '@ant-design/icons-vue'
 import { message, Modal } from 'ant-design-vue'
+import PageHeader from '@/components/PageHeader.vue'
 
 const showAddShortcutsModal = ref(false)
 const showEditShortcutsModal = ref(false)
@@ -214,8 +215,6 @@ function handleDeleteShortcuts(index) {
         </a-col>
 
     </a-row>
-
-    {{ shortcutsData }}
 
     <!-- 添加快捷方式模态框 -->
     <a-modal title="添加快捷方式" v-model:open="showAddShortcutsModal" @ok="handleAddShortcutsConfirm">
