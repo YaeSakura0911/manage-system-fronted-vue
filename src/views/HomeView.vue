@@ -1,7 +1,7 @@
 <script setup>
 import { h, onMounted, ref } from 'vue'
 import { RouterLink, RouterView, useRoute, useRouter } from 'vue-router'
-import { DashboardOutlined, LogoutOutlined, MenuFoldOutlined, MenuUnfoldOutlined, UserOutlined, SettingOutlined } from '@ant-design/icons-vue'
+import { CheckOutlined, DashboardOutlined, LogoutOutlined, MenuFoldOutlined, MenuUnfoldOutlined, ProjectOutlined, UserOutlined, SettingOutlined } from '@ant-design/icons-vue'
 
 const collapsed = ref(false)
 const route = useRoute()
@@ -57,6 +57,18 @@ onMounted(() => {
                             <router-link to="/dashboard/analysis">分析页</router-link>
                         </a-menu-item>
                     </a-sub-menu>
+                    <a-menu-item key="task">
+                        <check-outlined />
+                        <span>
+                            <router-link to="/task">任务管理</router-link>
+                        </span>
+                    </a-menu-item>
+                    <a-menu-item key="project">
+                        <project-outlined />
+                        <span>
+                            <router-link to="/project">项目管理</router-link>
+                        </span>
+                    </a-menu-item>
                     <a-sub-menu key="setting">
                         <template #title>
                             <setting-outlined />
@@ -68,6 +80,12 @@ onMounted(() => {
                         </a-menu-item>
                         <a-menu-item key="role">
                             <router-link to="/setting/role">角色管理</router-link>
+                        </a-menu-item>
+                        <a-menu-item key="department">
+                            <router-link to="/setting/department">部门管理</router-link>
+                        </a-menu-item>
+                        <a-menu-item key="job">
+                            <router-link to="/setting/job">岗位管理</router-link>
                         </a-menu-item>
                     </a-sub-menu>
 
@@ -148,7 +166,7 @@ onMounted(() => {
             </a-layout>
         </a-layout>
 
-        
+
     </a-config-provider>
 </template>
 

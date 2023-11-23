@@ -45,6 +45,32 @@ const router = createRouter({
                     ]
                 },
                 {
+                    path: '/task',
+                    name: 'Task',
+                    component: () => import('@/views/TaskView.vue'),
+                    meta: {
+                        title: '任务管理'
+                    },
+                    children: [
+                        {
+                            path: 'detail/:id',
+                            name: 'TaskDetail',
+                            component: () => import('@/views/TaskDetailView.vue'),
+                            meta: {
+                                title: '任务详情'
+                            }
+                        }
+                    ]
+                },
+                {
+                    path: '/project',
+                    name: 'Project',
+                    component: () => import('@/views/ProjectView.vue'),
+                    meta: {
+                        title: '项目管理'
+                    }
+                },
+                {
                     path: '/setting',
                     name: 'Setting',
                     children: [
@@ -62,6 +88,22 @@ const router = createRouter({
                             component: () => import('@/views/RoleView.vue'),
                             meta: {
                                 title: '角色管理'
+                            }
+                        },
+                        {
+                            path: 'department',
+                            name: 'Department',
+                            component: () => import('@/views/DepartmentView.vue'),
+                            meta: {
+                                title: '部门管理'
+                            }
+                        },
+                        {
+                            path: 'job',
+                            name: 'Job',
+                            component: () => import('@/views/JobView.vue'),
+                            meta: {
+                                title: '岗位管理'
                             }
                         }
                     ]

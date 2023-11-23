@@ -1,6 +1,6 @@
 <script setup>
 import { ref, reactive } from 'vue'
-import { PlusOutlined, SettingOutlined } from '@ant-design/icons-vue'
+import { PlusOutlined } from '@ant-design/icons-vue'
 import { message, Modal } from 'ant-design-vue'
 
 const showAddShortcutsModal = ref(false)
@@ -11,6 +11,7 @@ const showEditShortcutsModal = ref(false)
  */
 const notifyData = ref([
     {
+<<<<<<< HEAD
         title: '',
         content: '',
         type: 0,
@@ -21,6 +22,20 @@ const notifyData = ref([
         content: '',
         type: 1,
         status: 0
+=======
+        id: 1,
+        title: '通知',
+        content: '通知内容',
+        type: 0,
+        time: '2023-11-21 14:45:32',
+    },
+    {
+        id: 2,
+        title: '公告',
+        content: '公告内容',
+        type: 1,
+        time: '2023-11-20 16:43:25',
+>>>>>>> origin/main
     }
 ])
 /**
@@ -94,6 +109,12 @@ const addShortcutsForm = reactive({
 })
 
 
+function handleWatchNotifyConfirm(title, content, time) {
+    Modal.info({
+        title: title,
+        content: content
+    })
+}
 /**
  * 添加快捷方式确认按钮
  */
@@ -113,11 +134,28 @@ function handleDeleteShortcuts(index) {
 
 <template>
     <a-row :gutter="[16, 16]">
+<<<<<<< HEAD
+=======
+        <!-- 通知公告 -->
+>>>>>>> origin/main
         <a-col :xs="24" :lg="8">
             <a-card title="通知公告">
                 <a-list :data-source="notifyData">
                     <template #renderItem="{ item }">
+<<<<<<< HEAD
                         <a-list-item></a-list-item>
+=======
+                        <a-list-item>
+                            <template #actions>
+                                <a-typography-link @click="handleWatchNotifyConfirm(item.title, item.content, item.time)">查看</a-typography-link>
+                            </template>
+                            <a-list-item-meta :description="item.time">
+                                <template #title>
+                                    <a-typography-text strong>{{ item.title }}</a-typography-text>
+                                </template>
+                            </a-list-item-meta>
+                        </a-list-item>
+>>>>>>> origin/main
                     </template>
                 </a-list>
             </a-card>
@@ -140,12 +178,14 @@ function handleDeleteShortcuts(index) {
         <a-col :xs="24" :lg="8">
             <a-card title="快捷方式" :bordered="false">
                 <template #extra>
-                    <a-typography-link @click="() => (showEditShortcutsModal = !showEditShortcutsModal)">管理</a-typography-link>
+                    <a-typography-link
+                        @click="() => (showEditShortcutsModal = !showEditShortcutsModal)">管理</a-typography-link>
                 </template>
                 <a-card-grid v-for="shortcuts in shortcutsData">
                     <a-typography-link :href="shortcuts.url">{{ shortcuts.description }}</a-typography-link>
                 </a-card-grid>
-                <a-card-grid v-if="shortcutsData.length < 8" @click="() => (showAddShortcutsModal = !showAddShortcutsModal)">
+                <a-card-grid v-if="shortcutsData.length < 8"
+                    @click="() => (showAddShortcutsModal = !showAddShortcutsModal)">
                     <plus-outlined />
                     添加
                 </a-card-grid>
@@ -195,6 +235,12 @@ function handleDeleteShortcuts(index) {
 
     </a-row>
 
+<<<<<<< HEAD
+=======
+    {{ shortcutsData }}
+
+    <!-- 添加快捷方式模态框 -->
+>>>>>>> origin/main
     <a-modal title="添加快捷方式" v-model:open="showAddShortcutsModal" @ok="handleAddShortcutsConfirm">
         <a-form v-model="addShortcutsForm">
             <a-form-item label="说明">
@@ -206,6 +252,7 @@ function handleDeleteShortcuts(index) {
         </a-form>
         {{ addShortcutsForm }}
     </a-modal>
+    <!-- 管理快捷方式模态框 -->
     <a-modal title="管理快捷方式" v-model:open="showEditShortcutsModal">
         <a-list :data-source="shortcutsData">
             <template #renderItem="{ item, index }">
