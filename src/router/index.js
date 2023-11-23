@@ -50,17 +50,15 @@ const router = createRouter({
                     component: () => import('@/views/TaskView.vue'),
                     meta: {
                         title: '任务管理'
-                    },
-                    children: [
-                        {
-                            path: 'detail/:id',
-                            name: 'TaskDetail',
-                            component: () => import('@/views/TaskDetailView.vue'),
-                            meta: {
-                                title: '任务详情'
-                            }
-                        }
-                    ]
+                    }
+                },
+                {
+                    path: '/task/detail/:id',
+                    name: 'TaskDetail',
+                    component: () => import('@/views/TaskDetailView.vue'),
+                    meta: {
+                        title: '任务详情'
+                    }
                 },
                 {
                     path: '/project',

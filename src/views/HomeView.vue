@@ -123,7 +123,9 @@ watch(() => route.fullPath, (newPath) => {
                 <a-layout-content>
                     <a-page-header :ghost="false" :title="route.meta.title" :breadcrumb="breadcrumb">
                         <template #extra>
-                            <slot name="extra"></slot>
+                            <a-button>导出</a-button>
+                            <a-button type="primary">新增</a-button>
+                            <a-button type="primary">发布</a-button>
                         </template>
                         <!-- TODO: 只有工作台会显示下面内容 -->
                         <!-- <a-row justify="space-between">

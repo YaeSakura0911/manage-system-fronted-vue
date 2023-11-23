@@ -10,13 +10,16 @@ const columns = [
         dataIndex: 'title'
     },
     {
-        title: '负责人'
+        key: 'responser',
+        title: '负责人',
     },
     {
+        key: 'status',
         title: '状态'
     },
     {
-        title: '截止时间'
+        title: '截止时间',
+        dataIndex: 'deadline'
     },
     {
         key: 'action',
@@ -25,9 +28,9 @@ const columns = [
 ]
 const dataSource = [
     {
-        id: '',
+        id: '1',
         title: '测试任务',
-        responser: '',
+        responser: ['张三', '李四'],
         status: 0,
         deadline: '2023-12-30 23:59:59'
     }
@@ -37,9 +40,39 @@ const pagination = {
     pageSize: 10,
     total: 100
 }
+const rules = {
+    title: [
+        { required: true, message: '', trigger: 'change' }
+    ],
+    responser: [
+        { required: true, message: '', trigger: 'change' }
+    ],
+    deadline: [
+        { required: true, message: '', trigger: 'change' }
+    ]
+}
 
+/**
+ * 
+ */
 function handleCreate() {
     showTaskModal.value = true
+}
+
+/**
+ * 
+ * @param {*} id 
+ */
+function handleEdit(id) {
+
+}
+
+/**
+ * 
+ * @param {*} id 
+ */
+function handleDelete(id) {
+
 }
 </script>
 
@@ -93,8 +126,20 @@ function handleCreate() {
 
         <a-table :columns="columns" :dataSource="dataSource" :scroll="{ x: 'max-content' }" :pagination="pagination">
             <template #bodyCell="{ column, record }">
-                <template v-if="column.key === 'action'">
-
+                <template v-if="column.key === 'responser'">
+                    <a-space>
+                        <a-typography-text v-for="(item, index) in record.responser" :key="index">{{ item }}</a-typography-text>
+                    </a-space>
+                </template>
+                <template v-else-if="column.key === 'status'">
+                    <a-badge v-if="record.status === 0">未发布</a-badge>
+                </template>
+                <template v-else-if="column.key === 'action'">
+                    <router-link :to="'/task/detail/'+record.id">查看</router-link>
+                    <a-divider type="vertical" />
+                    <a-typography-link @click="handleEdit(record.id)">编辑</a-typography-link>
+                    <a-divider type="vertical" />
+                    <a-typography-link type="danger" @click="handleDelete(record.id)">删除</a-typography-link>
                 </template>
             </template>
         </a-table>
@@ -102,20 +147,20 @@ function handleCreate() {
 
     <a-modal v-model:open="showTaskModal" title="新建任务" cancelText="取消" okText="保存" :maskClosable="false">
         <div style="padding: 24px;">
-            <a-form :label-col="{style : {width: '72px'}}">
-                <a-form-item label="任务标题">
+            <a-form :rules="rules" :label-col="{style : {width: '80px'}}">
+                <a-form-item name="title" label="任务标题">
                     <a-input />
                 </a-form-item>
-                <a-form-item label="负责人">
+                <a-form-item name="responser" label="负责人">
                     <a-tree-select>
 
                     </a-tree-select>
                 </a-form-item>
-                <a-form-item label="截止时间">
+                <a-form-item name="deadline" label="截止时间">
                     <a-date-picker show-time></a-date-picker>
                 </a-form-item>
                 <a-form-item label="任务内容">
-                    <a-textarea>
+                    <a-textarea :auto-size="{ maxRows: 13 }" show-count :maxlength="255">
 
                     </a-textarea>
                 </a-form-item>
