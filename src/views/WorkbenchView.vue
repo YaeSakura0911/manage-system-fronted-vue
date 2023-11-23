@@ -12,18 +12,6 @@ const showEditShortcutsModal = ref(false)
  */
 const notifyData = ref([
     {
-<<<<<<< HEAD
-        title: '',
-        content: '',
-        type: 0,
-        status: 0,
-    },
-    {
-        title: '',
-        content: '',
-        type: 1,
-        status: 0
-=======
         id: 1,
         title: '通知',
         content: '通知内容',
@@ -36,7 +24,6 @@ const notifyData = ref([
         content: '公告内容',
         type: 1,
         time: '2023-11-20 16:43:25',
->>>>>>> origin/main
     }
 ])
 /**
@@ -135,17 +122,11 @@ function handleDeleteShortcuts(index) {
 
 <template>
     <a-row :gutter="[16, 16]">
-<<<<<<< HEAD
-=======
         <!-- 通知公告 -->
->>>>>>> origin/main
         <a-col :xs="24" :lg="8">
             <a-card title="通知公告">
                 <a-list :data-source="notifyData">
                     <template #renderItem="{ item }">
-<<<<<<< HEAD
-                        <a-list-item></a-list-item>
-=======
                         <a-list-item>
                             <template #actions>
                                 <a-typography-link @click="handleWatchNotifyConfirm(item.title, item.content, item.time)">查看</a-typography-link>
@@ -156,7 +137,6 @@ function handleDeleteShortcuts(index) {
                                 </template>
                             </a-list-item-meta>
                         </a-list-item>
->>>>>>> origin/main
                     </template>
                 </a-list>
             </a-card>
@@ -236,12 +216,9 @@ function handleDeleteShortcuts(index) {
 
     </a-row>
 
-<<<<<<< HEAD
-=======
     {{ shortcutsData }}
 
     <!-- 添加快捷方式模态框 -->
->>>>>>> origin/main
     <a-modal title="添加快捷方式" v-model:open="showAddShortcutsModal" @ok="handleAddShortcutsConfirm">
         <a-form v-model="addShortcutsForm">
             <a-form-item label="说明">
