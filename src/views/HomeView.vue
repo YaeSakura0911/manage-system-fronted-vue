@@ -1,39 +1,29 @@
 <script setup>
-import { h, onMounted, ref } from 'vue'
+import { h, onMounted, ref, watch } from 'vue'
 import { RouterLink, RouterView, useRoute, useRouter } from 'vue-router'
 import { CheckOutlined, DashboardOutlined, LogoutOutlined, MenuFoldOutlined, MenuUnfoldOutlined, ProjectOutlined, UserOutlined, SettingOutlined } from '@ant-design/icons-vue'
+import PageHeader from '@/components/PageHeader.vue'
 
 const collapsed = ref(false)
 const route = useRoute()
 const router = useRouter()
-const avatarUrl = ref('https://www.antdv.com/assets/logo.1ef800a8.svg')
-const name = ref('管理员')
-const breadcrumb = {
-    routes: [
-        {
-            path: 'home',
-            breadcrumbName: '首页'
-        },
-        {
-            path: 'dashboard',
-            breadcrumbName: '仪表盘'
-        },
-        {
-            path: 'workbench',
-            breadcrumbName: '工作台'
-        }
-    ],
-    itemRender(route, paths) {
-        console.log(route, paths)
-        console.log(breadcrumb.routes.indexOf(route))
-        console.log('routes', breadcrumb.routes)
-    }
-}
+
+const avatarUrl = 'https://www.antdv.com/assets/logo.1ef800a8.svg'
+const name = '管理员'
 
 onMounted(() => {
     console.log(route.fullPath)
     console.log(route.fullPath == '/dashboard/workbench')
     console.log(router.getRoutes())
+})
+
+watch(() => route.fullPath, (newPath) => {
+    switch (newPath) {
+        case '/task':
+            break
+        case '/project':
+            break
+    }
 })
 </script>
 
@@ -41,7 +31,7 @@ onMounted(() => {
     <a-config-provider>
         <a-layout>
             <!-- 侧边栏 -->
-            <a-layout-sider v-model:collapsed="collapsed" theme="light" :trigger="null" collapsible>
+            <a-layout-sider v-model:collapsed="collapsed" breakpoint="xs" collapsed-width="0" theme="light" :trigger="null" collapsible>
                 <div class="logo"></div>
                 <a-menu mode="inline">
                     <a-sub-menu key="dashboard">
@@ -131,10 +121,12 @@ onMounted(() => {
 
                 <!-- 内容 -->
                 <a-layout-content>
-                    <!-- 页头 -->
                     <a-page-header :ghost="false" :title="route.meta.title" :breadcrumb="breadcrumb">
+                        <template #extra>
+                            <slot name="extra"></slot>
+                        </template>
                         <!-- TODO: 只有工作台会显示下面内容 -->
-                        <a-row justify="space-between">
+                        <!-- <a-row justify="space-between">
                             <a-col>
                                 <a-avatar :src="avatarUrl" :size="64"></a-avatar>
                                 <a-typography-text>早上好，管理员</a-typography-text>
@@ -153,10 +145,10 @@ onMounted(() => {
                                     </a-statistic>
                                 </a-space>
                             </a-col>
-                        </a-row>
+                        </a-row> -->
                     </a-page-header>
 
-                    <a-layout style="padding: 24px;">
+                    <a-layout :style="{padding: '24px', minHeight: '100%'}">
                         <RouterView />
                     </a-layout>
                 </a-layout-content>
