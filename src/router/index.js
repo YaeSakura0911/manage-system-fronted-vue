@@ -49,7 +49,8 @@ const router = createRouter({
                     name: 'Task',
                     component: () => import('@/views/TaskView.vue'),
                     meta: {
-                        title: '任务管理'
+                        title: '任务管理',
+                        permission: 'task'
                     }
                 },
                 {
@@ -65,7 +66,8 @@ const router = createRouter({
                     name: 'Project',
                     component: () => import('@/views/ProjectView.vue'),
                     meta: {
-                        title: '项目管理'
+                        title: '项目管理',
+                        permission: 'project'
                     }
                 },
                 {
@@ -126,6 +128,10 @@ router.beforeEach(async (to, from) => {
             // 跳转去工作台
             return '/dashboard/workbench'
         }
+    }
+    else {
+        // 判断是否有权限
+        // from.meta.permission
     }
 })
 
